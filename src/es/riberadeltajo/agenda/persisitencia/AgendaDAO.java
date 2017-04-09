@@ -86,4 +86,30 @@ public class AgendaDAO
         }      
         return c;
     }
+    /**
+     * Elemina todos los contactos que tengan un determinado nombre
+     * @param nombre del contacto a eliminar
+     * 
+     * @return <ul><li>n si es posible realizar la eliminicación</li>
+     * <li>0 Si no se puede realizar el borrado</li></ul>
+     */
+    public int borrar(String nombre)
+    {
+        if(nombre==null)
+        {
+            throw new NullPointerException();
+        }
+        if(nombre.isEmpty())
+        {
+            throw new IllegalArgumentException();
+        }
+        int estado=0;
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Query q = em.createNamedQuery("Contacto.BorraPorNombre");
+        q.setParameter("nombre",nombre);
+        estado=q.executeUpdate();
+        em.close();
+        return estado;
+    }
 }

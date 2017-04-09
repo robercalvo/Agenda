@@ -64,4 +64,10 @@ public class AgendaDAOTest
     {   System.out.println("Buscar por nombre");
         assertNotNull(instance.getContacto("Juanjo"));
     }
+    @Test
+    public void testBorrarPorNombre()
+    {
+        System.out.println("Borrar por nombre");
+        assertEquals(0, instance.borrar("Juanjo"));
+    }
 }
