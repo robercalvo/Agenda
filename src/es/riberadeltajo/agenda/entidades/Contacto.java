@@ -1,12 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package es.riberadeltajo.agenda.entidades;
 
 import java.util.Objects;
+import javax.persistence.Entity;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  * Representa un contacto dentro de la agenda
@@ -14,12 +12,13 @@ import java.util.Objects;
  * @version 1.0
  * @since 1.0
  */
+@Entity
 public class Contacto implements Comparable
-{
-
-    
+{    
     public enum TIPO{AMIGO,FAMILA,TRABAJO,OTROS};
-    
+    @Id
+    @javax.persistence.GeneratedValue(strategy = GenerationType.AUTO)
+    @javax.persistence.Column(name="ID")
     private Long id;
     private String nombre;
     private String apellidos;
@@ -140,9 +139,6 @@ public class Contacto implements Comparable
             return this.getNombre().compareTo(c.getNombre());
         }        
     }
-//</editor-fold>
-    
-    
-    
+//</editor-fold>   
 
 }
