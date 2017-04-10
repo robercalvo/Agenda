@@ -58,7 +58,7 @@ public class AgendaDAO
     {
         List<Contacto> listAgenda=null;
         em = emf.createEntityManager();
-        Query q =em.createQuery("SELECT C FROM Contacto c");
+        Query q =em.createQuery("SELECT c FROM Contacto c");
         listAgenda = q.getResultList();
         em.close();
         return listAgenda;
@@ -80,9 +80,9 @@ public class AgendaDAO
         return c;
     }
     /**
-     * Elimina todos los contactos que tengan un determinado nombre
+     * Elimina un contacto a traves de su nombre
      * @param nombre del contacto a eliminar     * 
-     * @return <ul><li>n si es posible realizar la eliminicación</li>
+     * @return <ul><li>1 si es posible realizar la eliminicación</li>
      * <li>0 Si no se puede realizar el borrado</li></ul>
      */
     public int borrar(String nombre)
@@ -98,9 +98,12 @@ public class AgendaDAO
         int estado=0;
         em = emf.createEntityManager();
         em.getTransaction().begin();
-        Query q = em.createNamedQuery("Contacto.BorraPorNombre");
-        q.setParameter("nombre",nombre);
-        estado=q.executeUpdate();
+        Contacto c = em.find(Contacto.class, nombre);
+        if(c!=null)
+        {
+            em.remove(c);
+            estado++;
+        }        
         em.close();
         return estado;
     }

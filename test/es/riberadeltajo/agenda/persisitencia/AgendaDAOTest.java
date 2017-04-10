@@ -45,15 +45,29 @@ public class AgendaDAOTest
         b.setNombre("juanjo");
         agenda.guardar(b);
     }
+    @Test
     public void testBuscarContacto()
     {
         Contacto c = new Contacto();
         c.setNombre("Elena");
         agenda.guardar(c);
-        assertEquals(c,agenda.getContacto("Elena"));                
-    }
-    public void testContactoNoEncontrado()
-    {
+        assertEquals(c,agenda.getContacto("Elena"));
         assertNull(agenda.getContacto("asfdaf"));
+    }    
+    @Test
+    public void testTodosContactos()
+    {
+        Contacto c = new Contacto();
+        c.setNombre("Angel");
+        assertNotNull(agenda.getContactos());
+    }
+    @Test
+    public void testBorraContacto()
+    {
+        Contacto c = new Contacto();
+        c.setNombre("miguel");
+        agenda.guardar(c);
+        assertEquals(1,agenda.borrar("miguel"));
+//        assertEquals(0,agenda.borrar("miguel"));
     }
 }
