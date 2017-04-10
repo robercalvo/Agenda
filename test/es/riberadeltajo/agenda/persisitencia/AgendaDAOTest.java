@@ -3,6 +3,8 @@ package es.riberadeltajo.agenda.persisitencia;
 
 import es.riberadeltajo.agenda.entidades.Contacto;
 import java.util.List;
+import javax.persistence.EntityExistsException;
+import javax.persistence.RollbackException;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -18,62 +20,30 @@ import org.junit.runners.MethodSorters;
 
 public class AgendaDAOTest
 {
-    AgendaDAO instance;
-    public AgendaDAOTest()
-    {
-    }
-    
-    @BeforeClass
-    public static void setUpClass()
-    {
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-    }
-    
+    AgendaDAO agenda;   
     @Before
     public void setUp()
-    {
-        instance = new AgendaDAO();
+    {        
+        agenda = new AgendaDAO();
     }
-    
-    @After
-    public void tearDown()
-    {
-    }
-
-    /**
-     * Test of guardar method, of class AgendaDAO.
-     */
     @Test
     public void testGuardar()
     {
         System.out.println("Guardar");
         Contacto c = new  Contacto();
         c.setNombre("Juanjo");        
-        instance.guardar(c);        
+        agenda.guardar(c);        
     }
-    @Test(timeout=1000)
-    public void testObtenerTodos()
-    {   
-        System.out.println("Obtener todos los datos");
-        List <Contacto> l = instance.getContactos();
-        assertNotNull(l);
-    }    
-    @Test
-    public void testBuscarPorNombre()
-    {   System.out.println("Buscar por nombre");
-        assertNotNull(instance.getContacto("Juanjo"));
-    }
-    @Test
-    public void testBorrarPorNombre()
+    @Test(expected = RollbackException.class)
+    public void testGuardarRepetido()
     {
-        System.out.println("Borrar por nombre");
+        System.out.println("guardar repetido");
         Contacto c = new Contacto();
         c.setNombre("juanjo");
-        instance.guardar(c);
-        assertNotEquals(0, instance.borrar("juanjo"));        
+        agenda.guardar(c);
+        Contacto b = new Contacto();
+        b.setNombre("juanjo");
+        agenda.guardar(b);
     }
+    
 }

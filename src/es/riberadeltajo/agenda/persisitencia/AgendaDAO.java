@@ -20,8 +20,7 @@ import javax.persistence.Query;
  */
 public class AgendaDAO 
 {
-    private static final String UNIDAD_PERSISTENCIA="AgendaPU2";
-    
+    private static final String UNIDAD_PERSISTENCIA="AgendaPU2";    
     private final EntityManagerFactory emf;
     private EntityManager em;
     
@@ -38,13 +37,13 @@ public class AgendaDAO
     public void guardar(Contacto c) throws NullPointerException,IllegalArgumentException
     {
         if(c==null)
-        {
+        {            
             throw new NullPointerException();
         }
         if(c.getNombre().isEmpty())
         {
             throw new IllegalArgumentException();
-        }
+        }        
         em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(c);
@@ -65,7 +64,7 @@ public class AgendaDAO
         return listAgenda;
     }
     /**
-     * Obtiene el primer contacto que coincida con el nombre     * 
+     * Obtiene un contacto a traves del campo clave     * 
      * @param nombre Nombre del usuario que deseamos buscar
      * @return 
      */
@@ -79,17 +78,12 @@ public class AgendaDAO
         Contacto c = null;
         Query q = em.createNamedQuery("Contacto.BuscarPorNOmbre");
         q.setParameter("nombre",nombre);
-        List <Contacto> contactos = q.getResultList();
-        if(contactos!=null)
-        {
-            c=contactos.get(0);
-        }      
+        Contacto contacto = (Contacto)q.getSingleResult();              
         return c;
     }
     /**
-     * Elemina todos los contactos que tengan un determinado nombre
-     * @param nombre del contacto a eliminar
-     * 
+     * Elimina todos los contactos que tengan un determinado nombre
+     * @param nombre del contacto a eliminar     * 
      * @return <ul><li>n si es posible realizar la eliminicación</li>
      * <li>0 Si no se puede realizar el borrado</li></ul>
      */
