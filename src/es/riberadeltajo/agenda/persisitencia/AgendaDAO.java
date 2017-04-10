@@ -102,6 +102,7 @@ public class AgendaDAO
         if(c!=null)
         {
             em.remove(c);
+            em.getTransaction().commit();
             estado++;
         }        
         em.close();

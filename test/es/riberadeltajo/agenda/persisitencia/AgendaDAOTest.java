@@ -68,6 +68,7 @@ public class AgendaDAOTest
         c.setNombre("miguel");
         agenda.guardar(c);
         assertEquals(1,agenda.borrar("miguel"));
-//        assertEquals(0,agenda.borrar("miguel"));
+        assertEquals(0,agenda.borrar("miguel"));
+        
     }
 }
