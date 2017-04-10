@@ -3,10 +3,7 @@ package es.riberadeltajo.agenda.entidades;
 
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,13 +12,6 @@ import javax.persistence.Table;
  * @version 1.0
  * @since 1.0
  */
-@NamedQueries({
-    @NamedQuery(name="Contacto.BuscarPorNOmbre",
-                query="SELECT c FROM Contacto c WHERE c.nombre LIKE :nombre"),
-    @NamedQuery(name="Contacto.BorraPorNombre",
-                query="DELETE FROM Contacto c WHERE c.nombre LIKE :nombre")
-        })
-
 @Entity
 @Table(name="CONTACTOS")
 public class Contacto implements Comparable

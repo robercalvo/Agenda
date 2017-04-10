@@ -74,11 +74,9 @@ public class AgendaDAO
         {
             throw new IllegalArgumentException();
         }
-        em = emf.createEntityManager();
-        Contacto c = null;
-        Query q = em.createNamedQuery("Contacto.BuscarPorNOmbre");
-        q.setParameter("nombre",nombre);
-        Contacto contacto = (Contacto)q.getSingleResult();              
+        em = emf.createEntityManager();        
+        Contacto c= em.find(Contacto.class, nombre);                      
+        em.close();
         return c;
     }
     /**

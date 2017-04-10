@@ -45,5 +45,15 @@ public class AgendaDAOTest
         b.setNombre("juanjo");
         agenda.guardar(b);
     }
-    
+    public void testBuscarContacto()
+    {
+        Contacto c = new Contacto();
+        c.setNombre("Elena");
+        agenda.guardar(c);
+        assertEquals(c,agenda.getContacto("Elena"));                
+    }
+    public void testContactoNoEncontrado()
+    {
+        assertNull(agenda.getContacto("asfdaf"));
+    }
 }
