@@ -23,14 +23,12 @@ import javax.persistence.Table;
         })
 
 @Entity
-//@Table(name="CONTACTOS")
+@Table(name="CONTACTOS")
 public class Contacto implements Comparable
 {    
     public enum TIPO{AMIGO,FAMILA,TRABAJO,OTROS};
-    @Id
-    @javax.persistence.GeneratedValue(strategy = GenerationType.AUTO)
-    @javax.persistence.Column(name="ID")
-    private Long id;
+    @Id  
+    @javax.persistence.Column(name="ID_NOMBRE")    
     private String nombre;
     private String apellidos;
     private TIPO tipo;
@@ -38,16 +36,6 @@ public class Contacto implements Comparable
     private String email;
 
     //<editor-fold defaultstate="collapsed" desc="GETTER/SETTER">
-    public Long getId()
-    {
-        return id;
-    }
-    
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-    
     public String getNombre()
     {
         return nombre;
@@ -55,6 +43,14 @@ public class Contacto implements Comparable
     
     public void setNombre(String nombre)
     {
+        if(nombre==null)
+        {
+            throw new NullPointerException();
+        }
+        if(nombre.isEmpty())
+        {
+            throw new IllegalArgumentException();
+        }
         this.nombre = nombre;
     }
     
@@ -104,7 +100,7 @@ public class Contacto implements Comparable
     public int hashCode()
     {
         int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.nombre);
         return hash;
     }
     
@@ -121,10 +117,7 @@ public class Contacto implements Comparable
             return false;
         }
         final Contacto other = (Contacto) obj;
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.nombre, other.nombre);
     }
     /**
      * Compara dos objetos del tipo Contacto

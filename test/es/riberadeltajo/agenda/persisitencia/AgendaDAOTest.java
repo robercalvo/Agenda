@@ -9,10 +9,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 
 /**
  * @author Juanjo Acuña
  */
+
 public class AgendaDAOTest
 {
     AgendaDAO instance;
@@ -52,7 +55,7 @@ public class AgendaDAOTest
         c.setNombre("Juanjo");        
         instance.guardar(c);        
     }
-    @Test
+    @Test(timeout=1000)
     public void testObtenerTodos()
     {   
         System.out.println("Obtener todos los datos");
@@ -68,6 +71,9 @@ public class AgendaDAOTest
     public void testBorrarPorNombre()
     {
         System.out.println("Borrar por nombre");
-        assertEquals(0, instance.borrar("Juanjo"));
+        Contacto c = new Contacto();
+        c.setNombre("juanjo");
+        instance.guardar(c);
+        assertNotEquals(0, instance.borrar("juanjo"));        
     }
 }
