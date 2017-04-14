@@ -21,21 +21,19 @@ import javax.persistence.Query;
 public class AgendaDAO 
 {
     private static final String UNIDAD_PERSISTENCIA="AgendaPU2";    
-    private final EntityManagerFactory emf;
-    private EntityManager em;
+    private static EntityManagerFactory emf;
+    private static EntityManager em;
     
-    public AgendaDAO()
-    {
-        emf = Persistence.createEntityManagerFactory(UNIDAD_PERSISTENCIA);
-    }
+    
     /**
      * Almacen un contacto en nuestra agenda
      * @param c contacto que deseamos guardar
      * @throws NullPointerException
      * @throws IllegalArgumentException
      */
-    public void guardar(Contacto c) throws NullPointerException,IllegalArgumentException
+    public static void guardar(Contacto c) throws NullPointerException,IllegalArgumentException
     {
+        emf = Persistence.createEntityManagerFactory(UNIDAD_PERSISTENCIA);
         if(c==null)
         {            
             throw new NullPointerException();
@@ -54,8 +52,9 @@ public class AgendaDAO
      * Obtiene todos los caontactos almacenados en la agenda
      * @return un objeto List con los contactos
      */
-    public List<Contacto>getContactos()
+    public static List<Contacto>getContactos()
     {
+        emf = Persistence.createEntityManagerFactory(UNIDAD_PERSISTENCIA);
         List<Contacto> listAgenda=null;
         em = emf.createEntityManager();
         Query q =em.createQuery("SELECT c FROM Contacto c");
@@ -68,12 +67,13 @@ public class AgendaDAO
      * @param nombre Nombre del usuario que deseamos buscar
      * @return 
      */
-    public Contacto getContacto(String nombre)
+    public static  Contacto getContacto(String nombre)
     {
         if(nombre.isEmpty())
         {
             throw new IllegalArgumentException();
         }
+        emf = Persistence.createEntityManagerFactory(UNIDAD_PERSISTENCIA);
         em = emf.createEntityManager();        
         Contacto c= em.find(Contacto.class, nombre);                      
         em.close();
@@ -85,7 +85,7 @@ public class AgendaDAO
      * @return <ul><li>1 si es posible realizar la eliminicación</li>
      * <li>0 Si no se puede realizar el borrado</li></ul>
      */
-    public int borrar(String nombre)
+    public static int borrar(String nombre)
     {
         if(nombre==null)
         {
@@ -96,6 +96,7 @@ public class AgendaDAO
             throw new IllegalArgumentException();
         }
         int estado=0;
+        emf = Persistence.createEntityManagerFactory(UNIDAD_PERSISTENCIA);
         em = emf.createEntityManager();
         em.getTransaction().begin();
         Contacto c = em.find(Contacto.class, nombre);

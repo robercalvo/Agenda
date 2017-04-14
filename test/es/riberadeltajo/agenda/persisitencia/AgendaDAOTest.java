@@ -19,12 +19,11 @@ import org.junit.runners.MethodSorters;
  */
 
 public class AgendaDAOTest
-{
-    AgendaDAO agenda;   
+{       
     @Before
     public void setUp()
     {        
-        agenda = new AgendaDAO();
+        
     }
     @Test
     public void testGuardar()
@@ -32,7 +31,7 @@ public class AgendaDAOTest
         System.out.println("Guardar");
         Contacto c = new  Contacto();
         c.setNombre("Juanjo");        
-        agenda.guardar(c);        
+        AgendaDAO.guardar(c);        
     }
     @Test(expected = RollbackException.class)
     public void testGuardarRepetido()
@@ -40,35 +39,35 @@ public class AgendaDAOTest
         System.out.println("guardar repetido");
         Contacto c = new Contacto();
         c.setNombre("juanjo");
-        agenda.guardar(c);
+        AgendaDAO.guardar(c);
         Contacto b = new Contacto();
         b.setNombre("juanjo");
-        agenda.guardar(b);
+        AgendaDAO.guardar(b);
     }
     @Test
     public void testBuscarContacto()
     {
         Contacto c = new Contacto();
         c.setNombre("Elena");
-        agenda.guardar(c);
-        assertEquals(c,agenda.getContacto("Elena"));
-        assertNull(agenda.getContacto("asfdaf"));
+        AgendaDAO.guardar(c);
+        assertEquals(c,AgendaDAO.getContacto("Elena"));
+        assertNull(AgendaDAO.getContacto("asfdaf"));
     }    
     @Test
     public void testTodosContactos()
     {
         Contacto c = new Contacto();
         c.setNombre("Angel");
-        assertNotNull(agenda.getContactos());
+        assertNotNull(AgendaDAO.getContactos());
     }
     @Test
     public void testBorraContacto()
     {
         Contacto c = new Contacto();
         c.setNombre("miguel");
-        agenda.guardar(c);
-        assertEquals(1,agenda.borrar("miguel"));
-        assertEquals(0,agenda.borrar("miguel"));
+        AgendaDAO.guardar(c);
+        assertEquals(1,AgendaDAO.borrar("miguel"));
+        assertEquals(0,AgendaDAO.borrar("miguel"));
         
     }
 }
