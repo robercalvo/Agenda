@@ -2,17 +2,10 @@
 package es.riberadeltajo.agenda.persisitencia;
 
 import es.riberadeltajo.agenda.entidades.Contacto;
-import java.util.List;
-import javax.persistence.EntityExistsException;
 import javax.persistence.RollbackException;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.FixMethodOrder;
-import org.junit.runners.MethodSorters;
 
 /**
  * @author Juanjo Acuña
